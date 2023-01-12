@@ -1,0 +1,87 @@
+/* Reset */
+
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+/* Generics */
+
+body{
+font-family: sans-serif;
+height: 100vh;
+background-image: linear-gradient(#019688 20%, #dcdbd2 20%, #dcdbd2);
+}
+
+p{
+color: gray;
+}
+
+.fas, .far {
+color: gray;
+font-size: 20px;
+margin-left: 10px;
+}
+
+
+.fa-bell-slash{
+color:#8edbfc;
+font-size: 25px;
+margin-top: 10px;
+}
+
+/* .debugborder{
+border: 1px solid red;
+} */
+
+/* Utils */
+
+.circle{
+height: 50px;
+width: 50px;
+border-radius: 50%;
+background-color: white;
+
+overflow: hidden;
+}
+
+.circle img {
+max-width: 100%;
+display: block;
+object-fit: cover;
+}
+
+/* left-right sides */
+
+#left-side{
+border-right: 1px solid lightgrey;
+}
+
+.bar{
+height: 80px;
+background-color: #eaeaea;
+padding: 10px;
+position: sticky;
+}
+
+#notifications{
+height: 80px;
+background-color: #8edafc;
+padding: 10px;
+}
+
+#user-contacts{
+height: 520px;
+background-color: white
+}
+#search{
+height: 40px;
+background-color: white
+}
+
+#user-chat{
+background-image: url(../img/mine.jpg);
+height: 560px;
+}
+
