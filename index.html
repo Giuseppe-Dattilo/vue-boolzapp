@@ -13,6 +13,9 @@
         <!-- Bootstrap-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
+        <!-- Luxon -->
+        <script src="https://cdn.jsdelivr.net/npm/luxon@3.2.1/build/global/luxon.min.js"></script>
+
         <!-- Vue -->
         <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
@@ -33,20 +36,22 @@
                     
                     <!-- left Section -->
                     <div id="left-side" class="col-4 px-0 mt-5">
+                        <!-- User -->
                         <header id="user-nav" class="bar debugborder d-flex align-items-center justify-content-between ">
                             <div class="d-flex align-items-center">
                                 <div class="circle me-1">
-                                    <img src="img/avatar_io.jpg" alt="user-name">
+                                    <img :src="`img/avatar${user.avatar}.jpg`" :alt="user.name">
                                 </div>
-                               <span>Nome Utente</span>
+                               <span>{{user.name}}</span>
                             </div>
                             <!-- Icons -->
                             <div>
-                                <i class="fas fa-circle-notch"></i>
-                                <i class="fas fa-message"></i>
-                                <i class="fas fa-ellipsis-vertical"></i>
+                                <i class="fas fa-circle-notch" role="button"></i>
+                                <i class="fas fa-message" role="button"></i>
+                                <i class="fas fa-ellipsis-vertical" role="button"></i>
                             </div>
                         </header>
+                        <!-- Notification -->
                         <div id="notifications" class="debugborder">
                             <div class="d-flex align-items-center">
                                 <div class="circle mx-3">
@@ -58,47 +63,56 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Search Contacts-->
                         <div id="search" class="debugborder">
-                            <input type="text" class="form-control" placeholder=" &#8981; Cerca o inizia una nuova chat">
+                            <input type="text" class="form-control" placeholder=" &#8981; Cerca o inizia una nuova chat" v-model="userSearch">
                         </div>
+                        <!-- Contacts -->
                         <div id="user-contacts" class="overflow-auto debugborder">
-                            <div v-for="(contact,i) in contacts" class="d-flex align-items-center">
-                                <div class="circle me-1 mx-4 my-3 me-3">
-                                    <img :src=`img/avatar${contact.avatar}.jpg` alt="avatar">
+                            <div v-for="(contact,i) in filteredContact" class="d-flex align-items-center list-item" @click="setCurrentIndex(i)">
+                                <div class="circle me-1 mx-4 my-3 me-3 flex-shrink-0">
+                                    <img :src="`img/avatar${contact.avatar}.jpg`" :alt="contact.name">
                                 </div>
-                                <span>{{contact.name}}</span>
+                                <div>
+                                    <span>{{contact.name}}</span>
+                                    <div class="current-date">{{getCurrentMoment()}}</div>
+                                </div>     
                             </div>
                         </div>
                     </div>
 
                     <!-- right Section -->
                     <div id="right-side" class="col-8 px-0 mt-5">
+                        <!-- Chat Contact-->
                         <header id="user-nav-chat" class="bar debugborder d-flex align-items-center justify-content-between ">
                             <div class="d-flex align-items-center">
                                 <div class="circle me-1">
-                                    <img src="img/avatar_1.jpg" alt="user-name">
+                                    <img :src="`img/avatar${contacts[currentIndex].avatar}.jpg`"  :alt="contacts[currentIndex].name">
                                 </div>
                                 <div>
-                                    <span>Michele</span>
-                                    <p class="mb-0">Ultimo accesso oggi alle</p>
+                                    <span>{{contacts[currentIndex].name}}</span>
+                                    <p class="mb-0">Ultimo accesso oggi alle: {{getCurrentMoment()}}</p>
                                 </div>
                             </div>
                             <!-- Icons -->
                             <div>
-                                <i class="fas fa-magnifying-glass"></i>
-                                <i class="fas fa-paperclip"></i>
-                                <i class="fas fa-ellipsis-vertical"></i>
+                                <i class="fas fa-magnifying-glass" role="button"></i>
+                                <i class="fas fa-paperclip" role="button"></i>
+                                <i class="fas fa-ellipsis-vertical" role="button"></i>
                             </div>
                         </header>
-
-                        <div id="user-chat" class="bar overflow-auto debugborder">
-                           
+                        <!-- Chat -->
+                        <div id="user-chat" class="bar overflow-auto d-flex flex-column debugborder">
+                           <div v-for="message in this.contacts[this.currentIndex].messages" class="message" :class="message.status">
+                                <p class="text-dark">{{message.text}}</p>
+                                <div class="current-date">{{getCurrentMoment()}}</div>
+                           </div>
                         </div>
 
                         <!-- Footer -->
                         <footer class="bar debugborder d-flex align-items-center justify-content-between">
                             <i class="far fa-face-smile me-3"></i>
-                            <input type="text" class="form-control" placeholder="Scrivi un messaggio">
+                            <input type="text" class="form-control" placeholder="Scrivi un messaggio" v-model="userMsg" @keyup.enter="sendMsg">
                             <i class="fas fa-microphone ms-3"></i>
                         </footer>
                     </div>

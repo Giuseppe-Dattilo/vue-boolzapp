@@ -75,13 +75,48 @@ padding: 10px;
 height: 520px;
 background-color: white
 }
+
+#user-contacts .list-item:hover {
+cursor: pointer;
+background-color: #eaeaea;
+}
+
 #search{
-height: 40px;
-background-color: white
+height: 50px;
+background-color: white;
+padding: 10px;
 }
 
 #user-chat{
 background-image: url(../img/mine.jpg);
-height: 560px;
+height: 570px;
+padding: 50px;
 }
 
+#user-chat .message{
+width: 300px;  
+background-color:#d5faba;
+padding: 10px;
+border-radius: 15px;
+margin-bottom: 20px;
+}
+
+#user-contacts .message{
+    width: 50px; 
+    }
+
+#user-chat .message.received{
+background-color: white;
+align-self: flex-start;
+}
+
+#user-chat .message.sent{
+align-self: flex-end;
+}
+
+.current-date{
+text-align: right;
+color:grey;
+display: block;
+font-size: small;
+}
